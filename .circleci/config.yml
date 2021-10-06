@@ -11,11 +11,14 @@ jobs:
           command:
             mkdir microblog
       - run:
-          name: download project
+          name: Download project
           command:
             cd microblog;
             git clone https://github.com/toliangd/projectDevSecOps02
-
+      - run:
+          name: Install docker
+          command:
+            apt install docker
       - deploy:
           command:
             docker login -u ${DOCKER_USER} -p ${DOCKER_PASS};
