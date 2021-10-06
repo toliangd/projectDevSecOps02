@@ -19,5 +19,5 @@ jobs:
       - deploy:
           command:
             docker login -u ${DOCKER_USER} -p ${DOCKER_PASS};
-            docker build -t ${DOCKER_REPO}/${CIRCLE_PROJECT_REPONAME};
-            docker push ${DOCKER_REPO}/${CIRCLE_PROJECT_REPONAME}
+            docker build -t ${DOCKER_REPO};
+            docker push ${DOCKER_REPO}
