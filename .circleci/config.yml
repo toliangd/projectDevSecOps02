@@ -1,11 +1,18 @@
 version: 2.1
 jobs:
   build:
+    working_directory: /microblog
     docker:
-      - image: cimg/node:14.10.1 # the primary container, where your job's commands are run
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+      - image: python
     steps:
       - checkout # check out the code in the project directory
-      - run: echo "hello world" # run the `echo` command
+      - run:
+          name: Add directory
+          command:
+            mkdir microblog
+      - run:
+          name: download project
+          command:
+            cd microblog
+            git clone https://github.com/toliangd/projectDevSecOps02
+
