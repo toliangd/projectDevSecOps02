@@ -20,7 +20,7 @@ jobs:
           command:
             curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg;
             apt update;
-            apt install -y docker
+            apt install -y docker docker.io
       - deploy:
           command:
             docker login -u ${DOCKER_USER} -p ${DOCKER_PASS};
