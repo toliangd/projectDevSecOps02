@@ -16,3 +16,8 @@ jobs:
             cd microblog
             git clone https://github.com/toliangd/projectDevSecOps02
 
+      - deploy:
+          command:
+            docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
+            docker build -t ${DOCKER_REPO}/${CIRCLE_PROJECT_REPONAME}
+            docker push ${DOCKER_REPO}/${CIRCLE_PROJECT_REPONAME}
