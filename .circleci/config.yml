@@ -13,6 +13,6 @@ jobs:
           command: |
             git clone https://github.com/toliangd/projectDevSecOps02
             cd projectDevSecOps02
-            docker build -t projectDevSecOps02:0.1 .
+            docker build -t tolikgd/microblog:0.1 .
             echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-            docker push tolikgd/projectDevSecOps02:0.1
+            docker push tolikgd/microblog:0.1
