@@ -10,7 +10,7 @@ jobs:
       - run:
           name: Add directory
           command:
-            mkdir microblog
+            mkdir /tmp/microblog
       - run:
           name: Install python git
           command:
@@ -19,7 +19,7 @@ jobs:
       - run:
           name: Download
           command:
-            cd microblog;
+            cd /tmp/microblog;
             git clone https://github.com/toliangd/projectDevSecOps02;
             cd projectDevSecOps02;
       - run:
