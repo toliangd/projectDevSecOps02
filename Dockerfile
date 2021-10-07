@@ -8,6 +8,8 @@ RUN adduser --gid 10001 --uid 10001 \
 RUN mkdir /microblog
 ADD app /microblog
 
+RUN chown app /microblog
+
 USER app
 EXPOSE 8080
 WORKDIR /microblog
