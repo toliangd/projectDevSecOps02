@@ -1,4 +1,4 @@
-FROM python:buster
+FROM ubuntu:21.10
 
 RUN addgroup --gid 10001 app
 RUN adduser --gid 10001 --uid 10001 \

@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: /microblog
     docker:
-      - image: python
+      - image: ubuntu:21.10
     steps:
       - checkout # check out the code in the project directory
       - run:
@@ -18,9 +18,13 @@ jobs:
       - run:
           name: Install docker
           command:
-            curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg;
             apt update;
             apt install -y docker docker.io
+      - run:
+          name: Install python
+          command:
+            apt update;
+            apt install -y python3 pip3
       - deploy:
           command:
             docker login -u ${DOCKER_USER} -p ${DOCKER_PASS};
