@@ -18,11 +18,17 @@ jobs:
             apt install -y python3 python3-pip;
             apt install -y git
       - run:
-          name: Download/run project
+          name: Download
           command:
             cd microblog;
             git clone https://github.com/toliangd/projectDevSecOps02;
             cd projectDevSecOps02;
+      - run:
+          name: login
+          command: |
             echo ${DOCKER_PASS} | docker login -u ${DOCKER_USER} -p --password-stdin;
+      - run:
+          name: build
+          command: |
             docker build -t ${DOCKER_REPO} .;
             docker push ${DOCKER_REPO}
