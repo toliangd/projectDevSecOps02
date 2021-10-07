@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: /microblog
     docker:
-      - image: ubuntu:20.10
+      - image: circleci/buildpack-deps:stretch
     steps:
       - checkout # check out the code in the project directory
       - setup_remote_docker
@@ -15,7 +15,6 @@ jobs:
           name: Install python git
           command:
             apt update;
-            apt install -y python3 python3-pip;
             apt install -y git
       - run:
           name: Download
