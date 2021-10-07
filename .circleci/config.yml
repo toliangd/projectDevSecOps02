@@ -11,20 +11,21 @@ jobs:
           command:
             mkdir microblog
       - run:
-          name: Download project
-          command:
-            cd microblog;
-            git clone https://github.com/toliangd/projectDevSecOps02
-      - run:
           name: Install docker
           command:
             apt update;
             apt install -y docker docker.io
       - run:
-          name: Install python
+          name: Install python git
           command:
             apt update;
-            apt install -y python3 pip3
+            apt install -y python3 pip3 git
+      - run:
+          name: Download project
+          command:
+            cd microblog;
+            git clone https://github.com/toliangd/projectDevSecOps02
+
       - deploy:
           command:
             docker login -u ${DOCKER_USER} -p ${DOCKER_PASS};
