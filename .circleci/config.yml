@@ -14,7 +14,7 @@ jobs:
           name: Install docker
           command:
             apt update;
-            apt install -y docker docker.io
+            apt install -y docker.io docker
       - run:
           name: Install python git
           command:
