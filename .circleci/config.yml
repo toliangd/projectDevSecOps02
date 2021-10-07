@@ -19,13 +19,11 @@ jobs:
       - run:
           name: Install python
           command:
-            apt-get update;
             apt-get install -y python;
             apt-get install -y pip;
       - run:
           name: Install git
-          command:
-            apt-get update;            
+          command:           
             apt-get install -y git
       - run:
           name: Download project
