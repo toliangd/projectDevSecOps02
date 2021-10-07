@@ -1,33 +1,18 @@
 version: 2
 jobs:
   build:
-    working_directory: /microblog
     docker:
-      - image: circleci/buildpack-deps:stretch
+      - image: circleci/python:2.7.14
+        environment:
+          FLASK_CONFIG: testing
     steps:
-      - checkout # check out the code in the project directory
+      - checkout
       - setup_remote_docker
       - run:
-          name: Add directory
-          command:
-            mkdir /tmp/microblog
-      - run:
-          name: Install python git
-          command:
-            apt update;
-            apt install -y git
-      - run:
-          name: Download
-          command:
-            cd /tmp/microblog;
-            git clone https://github.com/toliangd/projectDevSecOps02;
+          name: Build and push Docker image
+          command: |
+            git clone https://github.com/toliangd/projectDevSecOps02
             cd projectDevSecOps02
-      - run:
-          name: login
-          command: |
-            echo ${DOCKER_PASS} | docker login -u ${DOCKER_USER} -p --password-stdin;
-      - run:
-          name: build
-          command: |
-            docker build -t ${DOCKER_REPO} .;
-            docker push ${DOCKER_REPO}
+            docker build -t tolikgd/projectDevSecOps02:0.1 .
+            echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+            docker push tolikgd/projectDevSecOps02:0.1
