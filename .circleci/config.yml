@@ -3,14 +3,9 @@ jobs:
   build:
     working_directory: /microblog
     docker:
-      - image: ubuntu:21.10
+      - image: ubuntu:18.04
     steps:
       - checkout # check out the code in the project directory
-      - run:
-          name: Update
-          command:
-            rm -f /var/cache/apt/archives/*.deb /var/cache/apt/archives/partial/*.deb /var/cache/apt/*.bin || true
-            apt-get update
       - run:
           name: Add directory
           command:
@@ -18,12 +13,13 @@ jobs:
       - run:
           name: Install docker
           command:
+            apt-get update;
             apt-get install -y docker.io;
             apt-get install -y docker
       - run:
           name: Install python git
           command:
-            apt install -y python3 pip3;
+            apt install -y python pip;
             apt install -y git
       - run:
           name: Download project
