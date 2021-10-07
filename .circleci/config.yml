@@ -7,19 +7,21 @@ jobs:
     steps:
       - checkout # check out the code in the project directory
       - run:
+          name: Update
+          command:
+            apt update
+      - run:
           name: Add directory
           command:
             mkdir microblog
       - run:
           name: Install docker
           command:
-            apt update;
             apt install -y docker.io;
             apt install -y docker
       - run:
           name: Install python git
           command:
-            apt update;
             apt install -y python3 pip3;
             apt install -y git
       - run:
