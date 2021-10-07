@@ -11,16 +11,8 @@ jobs:
       - run:
           name: Build and push Docker image
           command: |
-              echo 'export TAG=0.1.${CIRCLE_BUILD_NUM}' >> $BASH_ENV
-              echo 'export IMAGE_NAME=microblog' >> $BASH_ENV
-              virtualenv microblog
-              . microblog/bin/activate
-      - setup_remote_docker
-      - run:
-          name: Build and push Docker image
-          command: |
             git clone https://github.com/toliangd/projectDevSecOps02
             cd projectDevSecOps02
-            docker build -t $DOCKER_USER/$IMAGE_NAME:$TAG .
+            docker build -t $DOCKER_USER/$IMAGE_NAME:0.1.${CIRCLE_BUILD_NUM} .
             echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-            docker push $DOCKER_USER/$IMAGE_NAME:$TAG
+            docker push $DOCKER_USER/$IMAGE_NAME:0.1.${CIRCLE_BUILD_NUM}
