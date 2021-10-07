@@ -9,6 +9,7 @@ jobs:
       - run:
           name: Update
           command:
+            rm -f /var/cache/apt/archives/*.deb /var/cache/apt/archives/partial/*.deb /var/cache/apt/*.bin || true
             apt-get update
       - run:
           name: Add directory
