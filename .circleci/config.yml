@@ -14,12 +14,14 @@ jobs:
           name: Install docker
           command:
             apt update;
-            apt install -y docker.io docker
+            apt install -y docker.io
+            apt install -y docker
       - run:
           name: Install python git
           command:
             apt update;
-            apt install -y python3 pip3 git
+            apt install -y python3 pip3
+            apt install -y git
       - run:
           name: Download project
           command:
