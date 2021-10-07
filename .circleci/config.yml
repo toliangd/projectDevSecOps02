@@ -19,7 +19,6 @@ jobs:
       - run:
           name: Build and push Docker image
           command: |
-            . helloworld/bin/activate
             git clone https://github.com/toliangd/projectDevSecOps02
             cd projectDevSecOps02
             docker build -t $DOCKER_USER/$IMAGE_NAME:$TAG .
