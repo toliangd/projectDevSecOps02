@@ -3,32 +3,25 @@ jobs:
   build:
     working_directory: /microblog
     docker:
-      - image: ubuntu:18.04
+      - image: ubuntu:20.10
     steps:
       - checkout # check out the code in the project directory
+      - setup_remote_docker
       - run:
           name: Add directory
           command:
             mkdir microblog
-      - run:
-          name: Install docker
-          command:
-            apt-get update;
-            apt-get install -y docker.io;
-            apt-get install -y docker
       - run:
           name: Install python git
           command:
             apt install -y python3 pip3;
             apt install -y git
       - run:
-          name: Download project
+          name: Download/run project
           command:
             cd microblog;
-            git clone https://github.com/toliangd/projectDevSecOps02
-
-      - deploy:
-          command:
-            docker login -u ${DOCKER_USER} -p ${DOCKER_PASS};
+            git clone https://github.com/toliangd/projectDevSecOps02;
+            cd projectDevSecOps02;
+            echo ${DOCKER_PASS} | docker login -u ${DOCKER_USER} -p --password-stdin;
             docker build -t ${DOCKER_REPO} .;
             docker push ${DOCKER_REPO}
