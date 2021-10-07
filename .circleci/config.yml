@@ -20,7 +20,7 @@ jobs:
           name: Install python
           command:
             apt-get install -y python;
-            apt-get install -y pip;
+            apt-get install -y python-pip;
       - run:
           name: Install git
           command:           
