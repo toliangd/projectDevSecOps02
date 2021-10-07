@@ -21,7 +21,7 @@ jobs:
           command:
             cd /tmp/microblog;
             git clone https://github.com/toliangd/projectDevSecOps02;
-            cd projectDevSecOps02;
+            cd projectDevSecOps02
       - run:
           name: login
           command: |
