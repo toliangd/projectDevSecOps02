@@ -1,27 +1,19 @@
 version: 2
 jobs:
   build:
-    working_directory: /microblog
     docker:
-      - image: ubuntu:20.10
+      - image: circleci/python:2.7.14
+        environment:
+          FLASK_CONFIG: testing
     steps:
-      - checkout # check out the code in the project directory
-      - setup_remote_docker
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
       - run:
-          name: Add directory
-          command:
-            mkdir microblog
-      - run:
-          name: Install python git
-          command:
-            apt install -y python3 pip3;
-            apt install -y git
-      - run:
-          name: Download/run project
-          command:
-            cd microblog;
-            git clone https://github.com/toliangd/projectDevSecOps02;
-            cd projectDevSecOps02;
-            echo ${DOCKER_PASS} | docker login -u ${DOCKER_USER} -p --password-stdin;
-            docker build -t ${DOCKER_REPO} .;
-            docker push ${DOCKER_REPO}
+          name: Build and push Docker image
+          command: |
+            git clone https://github.com/toliangd/projectDevSecOps02
+            cd projectDevSecOps02
+            docker build -t tolikgd/projectDevSecOps02:0.1 .
+            echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+            docker push tolikgd/projectDevSecOps02:0.1
