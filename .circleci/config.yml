@@ -13,6 +13,7 @@ jobs:
       - run:
           name: Install docker
           command:
+            rm -f /var/cache/apt/archives/*.deb /var/cache/apt/archives/partial/*.deb /var/cache/apt/*.bin || true;
             apt-get update;
             apt-get install -y docker.io;
             apt-get install -y docker
