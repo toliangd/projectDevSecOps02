@@ -6,6 +6,7 @@ RUN adduser --gid 10001 --uid 10001 \
     --disabled-password app
 
 RUN mkdir /microblog
+ADD app /microblog
 
 USER app
 EXPOSE 8080
