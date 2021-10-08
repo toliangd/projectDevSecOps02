@@ -14,3 +14,8 @@ jobs:
             docker build -t $DOCKER_USER/$DOCKER_REPO:0.1.${CIRCLE_BRANCH}.${CIRCLE_BUILD_NUM} .
             echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
             docker push $DOCKER_USER/$DOCKER_REPO:0.1.${CIRCLE_BRANCH}.${CIRCLE_BUILD_NUM}
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build

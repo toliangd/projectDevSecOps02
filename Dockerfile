@@ -8,7 +8,16 @@ RUN adduser --gid 10001 --uid 10001 \
 ADD app /microblog/app
 ADD run.py /microblog
 RUN apt update && \
-    apt install -y python3 python3-pip curl net-tools && \
+    apt install -y \
+     python3-minimal=3.6.5-3 \
+     libpython3-stdlib=3.6.5-3 \
+     python3=3.6.5-3 \
+     python3-lib2to3=3.6.9 \
+     python3-distutils=3.6.5-3 \
+     python-pip-whl=9.0.1-2 \
+     python3-pip=9.0.1-2 \
+     curl \
+     net-tools && \
     pip3 install flask && \
     chown -R app:app /microblog && \
     chmod 777 /microblog
