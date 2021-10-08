@@ -1,0 +1,16 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:2.7.14
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Build and push Docker image
+          command: |
+            git clone https://github.com/toliangd/projectDevSecOps02
+            cd projectDevSecOps02
+            docker build -t $DOCKER_USER/$DOCKER_REPO:0.1.${CIRCLE_BUILD_NUM} .
+            echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+            docker push $DOCKER_USER/$DOCKER_REPO:0.1.${CIRCLE_BUILD_NUM}
