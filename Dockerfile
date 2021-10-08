@@ -5,9 +5,9 @@ RUN adduser --gid 10001 --uid 10001 \
     --home /microblog/app --shell /sbin/nologin \
     --disabled-password app
 
-RUN apt update && apt install -y python3 python3-pip curl net-tools && pip3 install flask
 ADD app /microblog/app
 ADD run.py /microblog
+RUN apt update && apt install -y python3 python3-pip curl net-tools && pip3 install flask && chown -R app:app microblog/
 
 USER app
 EXPOSE 5000:5000
