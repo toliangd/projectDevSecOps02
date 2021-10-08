@@ -11,6 +11,4 @@ jobs:
       - run:
           name: Build and push Docker image
           command: |
-            git clone https://github.com/toliangd/projectDevSecOps02
-            cd projectDevSecOps02
             echo $DOCKER_USER/$DOCKER_REPO:0.1.<<pipeline.git.branch>>.${CIRCLE_BUILD_NUM}
