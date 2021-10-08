@@ -11,4 +11,4 @@ jobs:
       - run:
           name: Build and push Docker image
           command: |
-            echo $DOCKER_USER/$DOCKER_REPO:0.1.<<pipeline.git.branch>>.${CIRCLE_BUILD_NUM}
+            echo $DOCKER_USER/$DOCKER_REPO:0.1.${CIRCLE_BRANCH}.${CIRCLE_BUILD_NUM}
