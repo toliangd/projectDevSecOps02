@@ -1,14 +1,22 @@
-version: 2
+version: 2.1
 jobs:
   build:
     docker:
       - image: circleci/python:2.7.14
-        environment:
-          FLASK_CONFIG: testing
     steps:
       - checkout
       - setup_remote_docker
       - run:
-          name: Build and push Docker image
+          name: Install trivy
           command: |
-            echo $DOCKER_USER/$DOCKER_REPO:0.1.${CIRCLE_BRANCH}.${CIRCLE_BUILD_NUM}
+            apk add --update-cache --upgrade curl
+            curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+      - run:
+          name: Build, scan and push Docker image
+          command: |
+            git clone https://github.com/toliangd/projectDevSecOps02
+            cd projectDevSecOps02
+            docker build -t $DOCKER_USER/$DOCKER_REPO:0.1.${CIRCLE_BRANCH}.${CIRCLE_BUILD_NUM} .
+            trivy --exit-code 0 --no-progress $DOCKER_USER/$DOCKER_REPO:0.1.${CIRCLE_BRANCH}.${CIRCLE_BUILD_NUM}
+            echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+            docker push $DOCKER_USER/$DOCKER_REPO:0.1.${CIRCLE_BRANCH}.${CIRCLE_BUILD_NUM}
