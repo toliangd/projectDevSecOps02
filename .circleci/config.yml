@@ -10,7 +10,9 @@ jobs:
           name: Install trivy
           command: |
             sudo apt install curl
-            curl -O https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh ./install.sh
+            curl -O https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh
+            chmod +x install.sh
+            sh ./install.sh
       - run:
           name: Build, scan and push Docker image
           command: |
