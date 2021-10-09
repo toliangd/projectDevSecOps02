@@ -19,4 +19,4 @@ jobs:
             git config user.name "test"
             git add README.md
             git commit -m "Update via CircleCI"
-            git push -q https://$GITHUB_PERSONAL_TOKEN@github.com/toliangd/projectDevSecOps02.git test
+            git push -u origin test
