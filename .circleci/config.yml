@@ -20,4 +20,4 @@ jobs:
             git add README.md
             git commit -m "Update via CircleCI"
             git checkout test
-            git push
+            git push -u origin test
