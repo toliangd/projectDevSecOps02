@@ -17,7 +17,7 @@ jobs:
           command: |
             git clone https://github.com/toliangd/projectDevSecOps02
             cd projectDevSecOps02
-            docker build -t $DOCKER_USER/$DOCKER_REPO:0.1.${CIRCLE_BUILD_NUM} .
-            trivy --exit-code 0 --no-progress $DOCKER_USER/$DOCKER_REPO:0.1.${CIRCLE_BUILD_NUM}
+            docker build -t $DOCKER_USER/$DOCKER_REPO:0.1.${CIRCLE_BRANCH}.${CIRCLE_BUILD_NUM} .
+            trivy --exit-code 0 --no-progress $DOCKER_USER/$DOCKER_REPO:0.1.${CIRCLE_BRANCH}.${CIRCLE_BUILD_NUM}
             echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-            docker push $DOCKER_USER/$DOCKER_REPO:0.1.${CIRCLE_BUILD_NUM}
+            docker push $DOCKER_USER/$DOCKER_REPO:0.1.${CIRCLE_BRANCH}.${CIRCLE_BUILD_NUM}
