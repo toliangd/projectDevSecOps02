@@ -17,4 +17,4 @@ jobs:
             git config user.name "test"
             git add README.md
             git commit -m "Update via CircleCI"
-            git branch
+            git branch -a
