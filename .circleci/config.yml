@@ -20,4 +20,5 @@ jobs:
             git add README.md
             git commit -m "Update via CircleCI"
             git checkout test
+            git remote add https://github.com/toliangd/projectDevSecOps02.git
             git push -u origin test
