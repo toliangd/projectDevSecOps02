@@ -10,15 +10,14 @@ jobs:
           name: Build and push Docker image
           command: |
             git clone https://github.com/toliangd/projectDevSecOps02.git
+            git config credential.helper 'cache --timeout=120'
+            git config user.email "test@test.ru"
+            git config user.name "test"
             cd projectDevSecOps02
             docker build -t $DOCKER_USER/$DOCKER_REPO:0.1.${CIRCLE_BUILD_NUM} .
             touch README.md
             echo "$DOCKER_USER/$DOCKER_REPO:0.1.${CIRCLE_BUILD_NUM}" >> README.md
-            git config credential.helper 'cache --timeout=120'
-            git config user.email "test@test.ru"
-            git config user.name "test"
+
             git add README.md
             git commit -m "Update via CircleCI"
-            git checkout test
-            git remote add https://github.com/toliangd/projectDevSecOps02.git
-            git push -u origin test
+            git push
