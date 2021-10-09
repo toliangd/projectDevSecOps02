@@ -10,8 +10,8 @@ jobs:
           name: Install trivy
           command: |
             sudo apt-get install rpm wget
-            wget https://github.com/aquasecurity/trivy/releases/download/v0.1.6/trivy_0.1.6_Linux-64bit.deb
-            sudo dpkg -i trivy_0.1.6_Linux-64bit.deb
+            wget https://github.com/aquasecurity/trivy/releases/download/v0.20.0/trivy_0.20.0_Linux-64bit.deb
+            sudo dpkg -i trivy_0.20.0_Linux-64bit.deb
       - run:
           name: Build, scan and push Docker image
           command: |
