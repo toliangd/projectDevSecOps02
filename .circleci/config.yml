@@ -23,7 +23,7 @@ jobs:
             docker build -t $DOCKER_USER/$DOCKER_REPO:0.1.${CIRCLE_BRANCH}.${CIRCLE_BUILD_NUM} .
             touch rezult
             trivy --exit-code 0 --no-progress $DOCKER_USER/$DOCKER_REPO:0.1.${CIRCLE_BRANCH}.${CIRCLE_BUILD_NUM} >> rezult-${CIRCLE_BUILD_NUM}
-            HIGH=$(cat rezult-${CIRCLE_BUILD_NUM} | grep HIGH | wc -l); echo "$HIGH"; if [[ $HIGH -gt 1 ]]; then exit 1; fi
+            HIGH=$(cat rezult-${CIRCLE_BUILD_NUM} | grep HIGH | wc -l); echo "$HIGH"; if [[ $HIGH -gt 2 ]]; then exit 1; fi
             git config credential.helper 'cache --timeout=120'
             git config user.email "circle@ci.ru"
             git config user.name "tolik"
@@ -35,7 +35,3 @@ jobs:
           command: |
             echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
             docker push $DOCKER_USER/$DOCKER_REPO:0.1.${CIRCLE_BRANCH}.${CIRCLE_BUILD_NUM}
-      - run:
-          name: push Docker image
-          command: |
-            HIGH=$(cat rezult-207 | grep HIGH | wc -l); echo "$HIGH"; if [[ $HIGH -gt  ]]; then exit 1; fi
