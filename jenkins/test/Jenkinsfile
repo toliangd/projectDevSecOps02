@@ -26,7 +26,8 @@ pipeline { // В нее мы оборачиваем наш код.
         stage('Тестирование') {
             agent any
             steps {
-                sh 'docker run aquasec/trivy $registry:$BUILD_NUMBER'
+                sh 'docker run aquasec/trivy $registry:$BUILD_NUMBER >> trivy'
+                sh 'HIGH=$(cat rezult-${CIRCLE_BUILD_NUM} | grep HIGH | wc -l); echo "$HIGH"; if [[ $HIGH -gt 2 ]]; then exit 1; fi'
             }
         }
         stage('Разветрывание') {
