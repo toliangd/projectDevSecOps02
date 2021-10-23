@@ -1,4 +1,5 @@
 pipeline { // В нее мы оборачиваем наш код.
+    agent any
     environment {
         registry = 'tolikgd/microblog'
         registryCred = 'dockerhub'
