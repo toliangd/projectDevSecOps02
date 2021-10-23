@@ -7,7 +7,7 @@ pipeline { // В нее мы оборачиваем наш код.
 
     stages {
         stage('test') {
-            agent {docker {image 'circleci/python'}}
+            agent any
             steps {
                 sh 'docker info'
             }
