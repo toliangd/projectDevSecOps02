@@ -1,0 +1,41 @@
+pipeline { // В нее мы оборачиваем наш код.
+    environment {
+        registry = 'tolikgd/microblog'
+        registryCred = 'dockerhub'
+    }
+
+    stages {
+        stage('test') {
+            agent {docker {image 'circleci/python'}}
+            steps {
+                sh 'docker info'
+            }
+        }
+        stage('Сборка, отправка и зачистка') {
+            agent any
+            steps {
+                script {
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                    docker.withRegistry('', registryCred) {
+                    dockerImage.push()
+                    }
+                    sh 'docker rmi $registry:$BUILD_NUMBER"'
+                }
+            }
+        }
+        stage('Тестирование') {
+            agent {docker {image 'circleci/python'}}
+            steps {
+                sh 'sudo apt-get install rpm wget'
+                sh 'wget https://github.com/aquasecurity/trivy/releases/download/v0.20.0/trivy_0.20.0_Linux-64bit.deb'
+                sh 'sudo dpkg -i trivy_0.20.0_Linux-64bit.deb'
+                sh 'trivy'
+            }
+        }
+        stage('Разветрывание') {
+            steps {
+                echo 'Развертывание'
+            }
+        }
+    }
+}
