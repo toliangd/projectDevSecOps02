@@ -24,12 +24,9 @@ pipeline { // В нее мы оборачиваем наш код.
             }
         }
         stage('Тестирование') {
-            agent {docker {image 'circleci/python'}}
+            agent any
             steps {
-                sh 'sudo apt-get install rpm wget'
-                sh 'wget https://github.com/aquasecurity/trivy/releases/download/v0.20.0/trivy_0.20.0_Linux-64bit.deb'
-                sh 'sudo dpkg -i trivy_0.20.0_Linux-64bit.deb'
-                sh 'trivy'
+                sh 'docker run aquasec/trivy $registry:$BUILD_NUMBER'
             }
         }
         stage('Разветрывание') {
