@@ -27,14 +27,15 @@ pipeline { // В нее мы оборачиваем наш код.
         stage('Тестирование_1') {
             agent {node {label 'master'}}
             steps {
-                sh 'docker run aquasec/trivy $registry:$BUILD_NUMBER >> rezult-$BUILD_NUMBER'
-                sh 'HIGH=$(cat rezult-$BUILD_NUMBER | grep HIGH | wc -l); echo "$HIGH"; if [[ $HIGH -gt 2 ]]; then exit 1; fi'
+                sh 'docker run aquasec/trivy $registry:$BUILD_NUMBER >> rezult-trivy-$BUILD_NUMBER'
+                sh 'CRITICAL=$(cat rezult-trivy-$BUILD_NUMBER | grep CRITICAL | wc -l); echo "$CRITICAL"; if [[ $CRITICAL -gt 0 ]]; then exit 1; fi'
             }
         }
         stage('Тестирование_2') {
             agent {node {label 'docker'}}
             steps {
-                sh 'grype $registry:$BUILD_NUMBER --scope all-layers'
+                sh 'grype $registry:$BUILD_NUMBER --scope all-layers >> rezult-grype-$BUILD_NUMBER'
+                sh 'CRITICAL=$(cat rezult-grype-$BUILD_NUMBER | grep CRITICAL | wc -l); echo "$CRITICAL"; if [[ $CRITICAL -gt 0 ]]; then exit 1; fi'
             }
         }
         stage('Разветрывание') {
