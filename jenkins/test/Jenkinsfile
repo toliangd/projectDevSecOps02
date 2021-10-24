@@ -6,8 +6,8 @@ pipeline { // В нее мы оборачиваем наш код.
     }
 
     stages {
-        agent {node {label 'master'}}
         stage('test') {
+            agent {node {label 'master'}}
             steps {
                 sh 'docker info'
             }
