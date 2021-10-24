@@ -13,6 +13,7 @@ pipeline { // В нее мы оборачиваем наш код.
             }
         }
         stage('Сборка, отправка и зачистка') {
+            agent {node {label 'master'}}
             steps {
                 script {
                     dockerImage = docker.build registry + ":$BUILD_NUMBER"
@@ -24,6 +25,7 @@ pipeline { // В нее мы оборачиваем наш код.
             }
         }
         stage('Тестирование_1') {
+            agent {node {label 'master'}}
             steps {
                 sh 'docker run aquasec/trivy $registry:$BUILD_NUMBER >> rezult-$BUILD_NUMBER'
                 sh 'HIGH=$(cat rezult-$BUILD_NUMBER | grep HIGH | wc -l); echo "$HIGH"; if [[ $HIGH -gt 2 ]]; then exit 1; fi'
