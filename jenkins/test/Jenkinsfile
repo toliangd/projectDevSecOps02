@@ -32,7 +32,8 @@ pipeline { // В нее мы оборачиваем наш код.
             agent {node {label 'master'}}
             steps {
                 sh '''
-                    lynis audit dockerfile /home/tolik/projectDevSecOps02/Dockerfile
+                    cd /home/tolik/projectDevSecOps02
+                    lynis audit dockerfile Dockerfile
                 '''
                 script {
                     dockerImage = docker.build registry + ":$BUILD_NUMBER"
