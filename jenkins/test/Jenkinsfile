@@ -7,23 +7,24 @@ pipeline { // В нее мы оборачиваем наш код.
 
     stages {
 
-        stage('Scan agent') {
+        stage('Scan agent master') {
             agent {node {label 'master'}}
             steps {
                 sh '''
-                echo ${password_Docker} | lynis audit system >> rezult-lynis-master
-
-                '''
-            }
-            agent {node {label 'docker'}}
-            steps {
-                sh '''
-                echo ${password_Master} | lynis audit system >> rezult-lynis-docker
+                echo ${password_Master} | lynis audit system >> rezult-lynis-master
 
                 '''
             }
         }
+        tage('Scan agent master') {
+            agent {node {label 'docker'}}
+            steps {
+                sh '''
+                echo ${password_Docker} | lynis audit system >> rezult-lynis-docker
 
+                '''
+            }
+        }
         stage('test') {
             agent {node {label 'master'}}
             steps {
