@@ -9,10 +9,9 @@ pipeline { // В нее мы оборачиваем наш код.
         stage('Scan agent master') {
             agent {node {label 'master'}}
             steps {
-                sh '''
-                echo ${password_Master}
-
-                '''
+                script {
+                    echo ${password_Master}
+                }
             }
         }
         stage('Scan agent Docker') {
