@@ -32,7 +32,6 @@ pipeline { // В нее мы оборачиваем наш код.
             agent {node {label 'master'}}
             steps {
                 sh '''
-                    cd /home/tolik/projectDevSecOps02
                     lynis audit dockerfile Dockerfile
                 '''
                 script {
