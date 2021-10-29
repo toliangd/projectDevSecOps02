@@ -10,7 +10,7 @@ pipeline { // В нее мы оборачиваем наш код.
             agent {node {label 'master'}}
             steps {
                 sh '''
-                echo ${password_Master} | sudo lynis audit system >> rezult-lynis-master
+                echo ${password_Master}
 
                 '''
             }
