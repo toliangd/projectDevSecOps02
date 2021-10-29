@@ -6,7 +6,6 @@ pipeline { // В нее мы оборачиваем наш код.
     }
 
     stages {
-
         stage('Scan agent master') {
             agent {node {label 'master'}}
             steps {
@@ -16,7 +15,7 @@ pipeline { // В нее мы оборачиваем наш код.
                 '''
             }
         }
-        stage('Scan agent master') {
+        stage('Scan agent Docker') {
             agent {node {label 'docker'}}
             steps {
                 sh '''
