@@ -10,7 +10,7 @@ pipeline { // В нее мы оборачиваем наш код.
             agent {node {label 'master'}}
             steps {
                 script {
-                    echo "** ${password_Master} **"
+                    lynis audit system
                 }
             }
         }
@@ -34,7 +34,7 @@ pipeline { // В нее мы оборачиваем наш код.
             steps {
                 script {
                     dockerImage = docker.build registry + ":$BUILD_NUMBER"
-                    docker.withRegistry('', ${dockerhub}) {
+                    docker.withRegistry('', registryCred) {
                     dockerImage.push()
                     }
                     sh 'docker rmi $registry:$BUILD_NUMBER'
