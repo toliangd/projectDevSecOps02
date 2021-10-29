@@ -10,7 +10,7 @@ pipeline { // В нее мы оборачиваем наш код.
             agent {node {label 'master'}}
             steps {
                 script {
-                    echo ${password_Master}
+                    echo "** ${password_Master} **"
                 }
             }
         }
