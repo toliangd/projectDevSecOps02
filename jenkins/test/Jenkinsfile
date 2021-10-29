@@ -16,7 +16,7 @@ pipeline { // В нее мы оборачиваем наш код.
                 '''
             }
         }
-        tage('Scan agent master') {
+        stage('Scan agent master') {
             agent {node {label 'docker'}}
             steps {
                 sh '''
