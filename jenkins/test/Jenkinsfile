@@ -6,24 +6,42 @@ pipeline { // В нее мы оборачиваем наш код.
     }
 
     stages {
+
+        stage('Scan agent') {
+            agent {node {label 'master'}}
+            steps {
+                sh '''
+                echo ${password_Docker} | lynis audit system >> rezult-lynis-master
+
+                '''
+            }
+            agent {node {label 'docker'}}
+            steps {
+                sh '''
+                echo ${password_Master} | lynis audit system >> rezult-lynis-docker
+
+                '''
+            }
+        }
+
         stage('test') {
             agent {node {label 'master'}}
             steps {
                 sh 'docker info'
             }
         }
-    /*    stage('Сборка, отправка и зачистка') {
+        stage('Сборка, отправка и зачистка') {
             agent {node {label 'master'}}
             steps {
                 script {
                     dockerImage = docker.build registry + ":$BUILD_NUMBER"
-                    docker.withRegistry('', registryCred) {
+                    docker.withRegistry('', ${dockerhub}) {
                     dockerImage.push()
                     }
                     sh 'docker rmi $registry:$BUILD_NUMBER'
                 }
             }
-        }*/
+        }
         stage('Тестирование_trivy') {
             agent {node {label 'master'}}
             steps {
