@@ -1,24 +1,33 @@
 pipeline { // В нее мы оборачиваем наш код.
     agent any
     environment {
-        registry = 'tolikgd/microblog'
+        registry = 'tolikgd/microblog' //надо заменять
         registryCred = 'dockerhub'
+        CRED = credentials('docker-p')
     }
 
     stages {
+        stage('pass') {
+            agent {node{label 'master'}}
+            steps {
+                sh '''
+                    echo $CRED
+                '''
+            }
+        }
         stage('Scan agent master') {
             agent {node {label 'master'}}
             steps {
                   sh '''
                     lynis audit system >> ./lynis-stdout.log
-                '''
+                  '''
             }
         }
         stage('Scan agent Docker') {
             agent {node {label 'docker'}}
             steps {
                 sh '''
-                echo 'scan'
+                echo $CRED | sudo lynis audit system >> ./lynis-stdout.log
                 '''
             }
         }
