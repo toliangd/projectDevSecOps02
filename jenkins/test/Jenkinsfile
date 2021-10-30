@@ -9,7 +9,7 @@ pipeline { // В нее мы оборачиваем наш код.
         stage('Scan agent master') {
             agent {node {label 'master'}}
             steps {
-                sh '''
+                  sh '''
                     lynis audit system >> ./lynis-stdout.log
                 '''
             }
@@ -32,7 +32,7 @@ pipeline { // В нее мы оборачиваем наш код.
             agent {node {label 'master'}}
             steps {
                 sh '''
-                    lynis audit dockerfile Dockerfile >> /lynis-stdout-Docker.log
+                    lynis audit dockerfile Dockerfile >> ./lynis-stdout-Docker.log
                 '''
                 script {
                     dockerImage = docker.build registry + ":$BUILD_NUMBER"
