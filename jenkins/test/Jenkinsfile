@@ -23,7 +23,7 @@ pipeline {      // В нее мы оборачиваем наш код.
         stage ('branch_name') {
             steps {
                 script {
-                    echo ${env.GIT_BRANCH}
+                    echo env.GIT_BRANCH
                 }
             }
         }
