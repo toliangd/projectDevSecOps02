@@ -29,9 +29,15 @@ pipeline {      // В нее мы оборачиваем наш код.
         }
         stage ('when,parallel') {
             when {
+                allOf {
                     branch 'origin/test'
+                    branch 'test'
+                    branch 'origin'
+                    branch 'master'
+                    branch 'remotes/origin/test'
                     //triggeredBy 'TimerTrigger'
                 }
+            }
             parallel {
                 stage ('input') {
                     steps {
