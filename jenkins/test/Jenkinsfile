@@ -20,7 +20,11 @@ pipeline {      // В нее мы оборачиваем наш код.
 
 
     stages {
-
+        stage ('branch_name') {
+            steps {
+                sh ('echo ${BRANCH_NAME}')
+            }
+        }
         stage ('when,parallel') {
             when {
                     branch 'test'
