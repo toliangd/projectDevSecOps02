@@ -18,13 +18,15 @@ pipeline {      // В нее мы оборачиваем наш код.
         sonar = credentials('sonar')
     }
 
+
     stages {
-        stage ('оповещение о начале') {
+
+        stage ('when,parallel') {
             when {
-                triggeredBy 'TimerTrigger'
-            }
+                    triggeredBy 'TimerTrigger'
+                }
             parallel {
-                stage {
+                stage ('input') {
                     steps {
                         script {
                             env.decision = input message: 'Please enter the decision (yes/no)',
@@ -32,21 +34,18 @@ pipeline {      // В нее мы оборачиваем наш код.
                                                  description: '',
                                                  name: 'decision')]
                             if (env.branch == 'yes') {
-
+                                echo 'wooooooooooooooooooooooooooooooooh'
                             }
                         }
                     }
                 }
-                stage {
-                    steps {
-                        sh '''
+                stage ('echo parallel input') {
+                    sh '''
                         echo 'проверка параллельной работы'
                         '''
-                    }
                 }
             }
         }
-
 
         stage('pass') {
             agent {node{label 'master'}}
