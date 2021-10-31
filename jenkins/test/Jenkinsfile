@@ -29,14 +29,7 @@ pipeline {      // В нее мы оборачиваем наш код.
         }
         stage ('when,parallel') {
             when {
-                allOf {
-                    branch 'origin/test'
-                    branch 'test'
-                    branch 'origin'
-                    branch 'master'
-                    branch 'remotes/origin/test'
-                    //triggeredBy 'TimerTrigger'
-                }
+                equals expected: 'origin/test', actual: env.GIT_BRANCH
             }
             parallel {
                 stage ('input') {
