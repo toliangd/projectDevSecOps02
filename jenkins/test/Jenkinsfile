@@ -38,6 +38,7 @@ pipeline { // В нее мы оборачиваем наш код.
                     }
                 }
             }
+        }
         stage('test') {
             agent {node {label 'master'}}
             steps {
