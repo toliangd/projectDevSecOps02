@@ -29,6 +29,15 @@ pipeline { // В нее мы оборачиваем наш код.
                 '''
             }
         }
+        stage('sonarQube') {
+        agent {node {label 'docker'}}
+            steps {
+                script {
+                    withSonarQubeEnv('sq1') { // If you have configured more than one global server connection, you can specify its name
+                        sh "/home/jenkins/sonar/sonar-scanner-4.6.2.2472-linux/bin/sonar-scanner"
+                    }
+                }
+            }
         stage('test') {
             agent {node {label 'master'}}
             steps {
