@@ -96,9 +96,7 @@ pipeline {      // В нее мы оборачиваем наш код.
         stage('Сборка, отправка и зачистка') {
             agent {node {label 'master'}}
             when { // если условие в {} верно, то выполняем steps{}
-                anyOf { // любое из указанных условий верно, allOf - все условия верны
-                    branch 'origin/test'
-                }
+                equals expected: 'origin/test', actual: env.GIT_BRANCH
             }
             steps {
                 sh '''
