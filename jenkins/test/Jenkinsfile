@@ -52,6 +52,11 @@ pipeline {      // В нее мы оборачиваем наш код.
                             '''
                     }
                 }
+                stage ('email send') {
+                    steps {
+                        emailext(attachLog: true, body: 'this is a test message', subject: 'loock for a job', to: 'tolik.gd@gmail.com')
+                    }
+                }
             }
         }
 
