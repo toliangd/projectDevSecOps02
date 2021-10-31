@@ -23,7 +23,8 @@ pipeline {      // В нее мы оборачиваем наш код.
 
         stage ('when,parallel') {
             when {
-                    triggeredBy 'TimerTrigger'
+                    branch 'test'
+                    //triggeredBy 'TimerTrigger'
                 }
             parallel {
                 stage ('input') {
@@ -91,7 +92,7 @@ pipeline {      // В нее мы оборачиваем наш код.
             agent {node {label 'master'}}
             when { // если условие в {} верно, то выполняем steps{}
                 anyOf { // любое из указанных условий верно, allOf - все условия верны
-                    branch 'master' ; branch 'test'
+                    branch 'test'
                 }
             }
             steps {
