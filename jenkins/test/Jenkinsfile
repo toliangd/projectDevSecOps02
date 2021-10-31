@@ -4,6 +4,7 @@ pipeline { // В нее мы оборачиваем наш код.
         registry = 'tolikgd/microblog' //надо заменять
         registryCred = 'dockerhub'
         CRED = credentials('docker-p')
+        sonar = credentials('sonar')
     }
 
     stages {
@@ -34,7 +35,7 @@ pipeline { // В нее мы оборачиваем наш код.
             steps {
                 script {
                     withSonarQubeEnv('sq1') { // If you have configured more than one global server connection, you can specify its name
-                        sh '''ls -la'''
+                        sh '''/home/tolik/sonar/sonar-scanner-4.6.2.2472-linux/bin/sonar-scanner   -Dsonar.projectKey=sq1   -Dsonar.sources=.   -Dsonar.host.url=http://10.15.20.20:9000   -Dsonar.login=${sonar}'''
                     }
                 }
             }
