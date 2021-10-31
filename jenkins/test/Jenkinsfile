@@ -23,10 +23,7 @@ pipeline {      // В нее мы оборачиваем наш код.
         stage ('branch_name') {
             steps {
                 script {
-                    def getGitBranchName() {
-                        return scm.branches[0].name
-                    }
-                    //echo env.BRANCH_NAME
+                    echo ${env.GIT_BRANCH}
                 }
             }
         }
