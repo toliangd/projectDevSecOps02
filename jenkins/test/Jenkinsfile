@@ -1,5 +1,16 @@
-pipeline { // В нее мы оборачиваем наш код.
-    agent any
+/*
+Определение конвейера через классический пользовательский интерфейс удобно для тестирования фрагментов кода конвейера
+или для обработки простых конвейеров или конвейеров, которые не требуют извлечения / клонирования исходного кода
+из репозитория. Как упоминалось выше, в отличие от Jenkinsfiles, которые вы определяете через Blue Ocean ( выше )
+или в системе управления версиями ( ниже ), Jenkinsfiles, введенные в область текстовой области Script проектов
+Pipeline, хранятся самим Jenkins в домашнем каталоге Jenkins. Поэтому для большего контроля и гибкости
+вашего конвейера, особенно для проектов в системе управления версиями, которые могут стать более сложными
+, рекомендуется использовать Blue Ocean или систему управления версиями для определения вашего Jenkinsfile.
+*/
+
+pipeline {      // В нее мы оборачиваем наш код.
+    agent any   // указывает Jenkins выделить исполнителя (на любом доступном агенте / узле в среде Jenkins) и рабочую область для всего конвейера.
+     	        // node - фактически делает то же самое, что и agent(выше).
     environment {
         registry = 'tolikgd/microblog' //надо заменять
         registryCred = 'dockerhub'
@@ -8,6 +19,35 @@ pipeline { // В нее мы оборачиваем наш код.
     }
 
     stages {
+        stage ('оповещение о начале') {
+            when {
+                triggeredBy 'TimerTrigger'
+            }
+            parallel {
+                stage {
+                    steps {
+                        script {
+                            env.decision = input message: 'Please enter the decision (yes/no)',
+                                                 parameters: [string(defaultValue: '',
+                                                 description: '',
+                                                 name: 'decision')]
+                            if (env.branch == 'yes') {
+
+                            }
+                        }
+                    }
+                }
+                stage {
+                    steps {
+                        sh '''
+                        echo 'проверка параллельной работы'
+                        '''
+                    }
+                }
+            }
+        }
+
+
         stage('pass') {
             agent {node{label 'master'}}
             steps {
@@ -48,6 +88,11 @@ pipeline { // В нее мы оборачиваем наш код.
         }
         stage('Сборка, отправка и зачистка') {
             agent {node {label 'master'}}
+            when { // если условие в {} верно, то выполняем steps{}
+                anyOf { // любое из указанных условий верно, allOf - все условия верны
+                    branch 'master' ; branch 'test'
+                }
+            }
             steps {
                 sh '''
                     lynis audit dockerfile Dockerfile >> ./lynis-stdout-Docker.log
