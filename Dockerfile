@@ -24,7 +24,7 @@ RUN apt update && \
 
 
 USER app
-EXPOSE 5000:5000
+#EXPOSE 5000:5000
 ENTRYPOINT ["python3", "/microblog/run.py"]
 
 
